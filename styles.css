@@ -9,7 +9,7 @@ body {
     width: 100%;
   }
   .inbound {
-    background-image: url('/Users/marianamizoguchi/mit-xpro/BusTracker/red.png');
+    background-image: url('red.png');
     background-size: 25px;
     width: 25px;
     height: 25px;
@@ -17,7 +17,7 @@ body {
     cursor: pointer;
   }
   .outbound {
-    background-image: url('/Users/marianamizoguchi/mit-xpro/BusTracker/blue.png');
+    background-image: url('blue.png');
     background-size: 25px;
     width: 25px;
     height: 25px;
