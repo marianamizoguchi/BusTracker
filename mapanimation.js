@@ -1,11 +1,3 @@
-// This array contains the coordinates for all bus stops between MIT and Harvard
-async function run(){
-  // get bus data    
-const locations = await getBusLocations();
-console.log(new Date());
-console.log(locations);
-var buses = locations.length;
-
 // add your own access token
 mapboxgl.accessToken = 'pk.eyJ1IjoibWFyaW1pem9ndWNoaSIsImEiOiJja29qZ255Z24xNGs3MndueHh4Nnc0d2FxIn0.wwB_lxuU8jSasEqjslhMEQ';
   
@@ -14,7 +6,7 @@ let map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/mapbox/streets-v11',
   center: [-71.08927333556, 42.350803759733076],
-  zoom: 12.5,
+  zoom: 14.5,
 });
 
 map.on('load', function () {
@@ -69,33 +61,61 @@ map.on('load', function () {
   }
   });
   });
+  
+
+// This array contains the coordinates for all bus stops of route #1
+async function run(){
+
+  // get bus data
+const locations = await getBusLocations();
+console.log(new Date());
+console.log(locations);
+var buses = locations.length;
+console.log(buses);
+
+for (let j = 0; j <= mapMarkers.length - 1; j++ ) {
+  mapMarkers[j].remove();
+}
+  
+mapMarkers = [];
 
 for (let i = 0; i <= buses - 1; i++){
-  locations.forEach(function(marker) {
-    if(locations[i].attributes.direction_id == 1){
+   // locations.forEach(function(marker) {
+        if(locations[i].attributes.direction_id == 1){
     // create a HTML element for each feature
-    var el = document.createElement('div');
-    el.className = 'inbound';
+        var el = document.createElement('div');
+        el.className = 'inbound';
   
-    // make a marker for each feature and add to the map
-    new mapboxgl.Marker(el)
-      .setLngLat([locations[i].attributes.longitude, locations[i].attributes.latitude])
-      .addTo(map);
+       // make a marker for each feature and add to the map
+       var newmarker = new mapboxgl.Marker(el)
+      .setLngLat([locations[i].attributes.longitude, locations[i].attributes.latitude]).addTo(map);
+      
+      mapMarkers.push(newmarker);
+      
+      
     }
     else{
       var el = document.createElement('div');
     el.className = 'outbound';
   
     // make a marker for each feature and add to the map
-    new mapboxgl.Marker(el)
-      .setLngLat([locations[i].attributes.longitude, locations[i].attributes.latitude])
-      .addTo(map);
-    }
-  });
-};
+   
+    var newmarker = new mapboxgl.Marker(el)
+    .setLngLat([locations[i].attributes.longitude, locations[i].attributes.latitude]).addTo(map)
+  
+    mapMarkers.push(newmarker);
+        }
+  
+  };
+  //)
+
+//};
 
 setTimeout(run, 15000);
+
 }
+
+
 
 // Request bus data from MBTA
 async function getBusLocations(){
@@ -105,5 +125,5 @@ const json     = await response.json();
 return json.data;
 }
 
+let mapMarkers = [];
 run();
-
