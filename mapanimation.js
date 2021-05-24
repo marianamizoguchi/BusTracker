@@ -63,10 +63,9 @@ map.on('load', function () {
   });
   
 
-// This array contains the coordinates for all bus stops of route #1
+// This array contains the coordinates for all buses of route #1
 async function run(){
-
-  // get bus data
+// get bus data
 const locations = await getBusLocations();
 console.log(new Date());
 console.log(locations);
@@ -80,8 +79,7 @@ for (let j = 0; j <= mapMarkers.length - 1; j++ ) {
 mapMarkers = [];
 
 for (let i = 0; i <= buses - 1; i++){
-   // locations.forEach(function(marker) {
-        if(locations[i].attributes.direction_id == 1){
+    if(locations[i].attributes.direction_id == 1){
     // create a HTML element for each feature
         var el = document.createElement('div');
         el.className = 'inbound';
@@ -92,11 +90,10 @@ for (let i = 0; i <= buses - 1; i++){
       
       mapMarkers.push(newmarker);
       
-      
     }
     else{
       var el = document.createElement('div');
-    el.className = 'outbound';
+      el.className = 'outbound';
   
     // make a marker for each feature and add to the map
    
@@ -107,9 +104,6 @@ for (let i = 0; i <= buses - 1; i++){
         }
   
   };
-  //)
-
-//};
 
 setTimeout(run, 15000);
 
